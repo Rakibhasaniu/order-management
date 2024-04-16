@@ -20,7 +20,26 @@ const createUser = async(req:Request,res:Response,next:NextFunction) => {
 const getAllUser = async(req:Request,res:Response,next:NextFunction) => {
     try{
         const user = await UserService.getAllUser();
-        console.log(user)
+        // console.log(user)
+
+        res.json({
+            success:true,
+            message:'User Retrieve Successfully',
+            data:user
+        })
+
+    } catch(err){
+        next(err);
+    }
+}
+
+const getSingleUser = async(req:Request,res:Response,next:NextFunction) => {
+    try{
+
+        const userId = req.params.userId;
+        // console.log(userId)
+        const user = await UserService.getSingleUserFromDB(userId);
+        // console.log(user)
 
         res.json({
             success:true,
@@ -35,6 +54,7 @@ const getAllUser = async(req:Request,res:Response,next:NextFunction) => {
 
 export const UserController = {
     createUser,
-    getAllUser
+    getAllUser,
+    getSingleUser
     
 }
