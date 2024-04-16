@@ -52,9 +52,47 @@ const getSingleUser = async(req:Request,res:Response,next:NextFunction) => {
     }
 }
 
+const updateUser = async(req:Request,res:Response,next:NextFunction) => {
+    try{
+
+        const userId = parseInt(req.params.userId);
+        // console.log(userId)
+        const userData = req.body;
+        const user = await UserService.updateUserFromDB(userId,userData);
+
+        res.json({
+            success:true,
+            message:'User Updated Successfully',
+            data:user
+        })
+
+    } catch(err){
+        next(err);
+    }
+}
+const deleteUser = async(req:Request,res:Response,next:NextFunction) => {
+    try{
+
+        const userId = parseInt(req.params.userId);
+        // console.log(userId)
+        // const userData = req.body;
+        const user = await UserService.deleteUserFroDB(userId);
+
+        res.json({
+            success:true,
+            message:'User deleted Successfully',
+            data:user
+        })
+
+    } catch(err){
+        next(err);
+    }
+}
+
 export const UserController = {
     createUser,
     getAllUser,
-    getSingleUser
-    
+    getSingleUser,
+    updateUser,
+    deleteUser    
 }
