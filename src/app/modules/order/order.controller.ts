@@ -30,8 +30,24 @@ const getAllOrder = async(req:Request,res:Response,next:NextFunction) => {
     }
     
 }
+const countTotal = async(req:Request,res:Response,next:NextFunction) => {
+    try {
+        const userId = parseInt(req.params.userId);
+        let result = await OrderServices.countTotalPrice(userId)
+        const totalPrice = result;
+        res.json({
+            success:true,
+            message:'Order Price Count Successfully',
+            data:{totalPrice}
+        })
+    } catch (err) {
+        next();
+    }
+    
+}
 
 export const OrderController = {
     addNewOrder,
-    getAllOrder
+    getAllOrder,
+    countTotal
 }

@@ -39,8 +39,23 @@ const getAllProduct = async(userId:number) => {
     // console.log(orders)
   return orders;
 }
+
+const countTotalPrice = async(userId:number) => {
+    const user = await User.findOne({userId});
+    if(!user){
+        return { success: false, message: 'User not found' };
+    }
+    const order = await Order.findOne({userId:userId})
+    if(!order ){
+        return { success: false, message: 'Order not found' };
+    }
+    const totalPrice = order.orders.reduce((acc, order) => acc + (order.price * order.quantity), 0);
+    return totalPrice;
+    
+}
 export const OrderServices = {
     addNewOrderIntoDB,
     getAllProduct,
+    countTotalPrice
 
 }
