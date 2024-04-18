@@ -16,7 +16,22 @@ const addNewOrder = async(req:Request,res:Response,next:NextFunction) => {
     }
     
 }
+const getAllOrder = async(req:Request,res:Response,next:NextFunction) => {
+    try {
+        const userId = parseInt(req.params.userId);
+        const result = await OrderServices.getAllProduct(userId)
+        res.json({
+            success:true,
+            message:'Order Fetched Successfully',
+            data:result
+        })
+    } catch (err) {
+        next();
+    }
+    
+}
 
 export const OrderController = {
-    addNewOrder
+    addNewOrder,
+    getAllOrder
 }
